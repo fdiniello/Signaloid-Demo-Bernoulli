@@ -11,7 +11,8 @@ int main(int argc, char *argv[]) {
   double CI;   // Lift Coefficient [no unit]
   double rho;  // Air Density [kg/m^3]
   double Aw;   // Wing Area [m^2]
-  double Vw;   // Relative Wind's velocity [m/s]
+  double Vw_squared;   // Relative Wind's velocity [m/s]
+  double delta_pressure; // relative wind's pressure [N/m^2]
 
   CI = read_samples("samples-normal-CI.csv");
   printf("Lift Coefficient = %lf [1] \n", CI);
@@ -22,11 +23,17 @@ int main(int argc, char *argv[]) {
   Aw = read_samples("samples-normal-Wing-Area.csv");
   printf("Wing Area = %lf [m^2] \n", Aw);
 
-  Vw = read_samples("samples-uniform-velocity.csv");
-  printf("Wind velocity = %lf [m/s] \n", Vw);
+  delta_pressure = read_samples("samples-uniform-delta-pressure.csv");
+  printf("delta_pressure = %lf [N/m^2] \n", delta_pressure);
 
-  Lift = 0.5 * CI * rho * Aw * pow(Vw, 2.0);
 
+  
+  Vw_squared = 2 * delta_pressure / rho;
+  printf("Measured Wind Speed = %lf [m/s]\n", sqrt(Vw_squared));
+
+
+
+  Lift = 0.5 * CI * rho * Aw * Vw_squared;
   printf("Lift Force = %lf [N]\n", Lift);
 
   return 0;
