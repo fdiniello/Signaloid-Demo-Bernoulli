@@ -32,8 +32,7 @@ int main(int argc, char *argv[]) {
   printf("Measured Wind Speed = %lf [m/s]\n", sqrt(Vw_squared));
 
 
-
-  Lift = 0.5 * CI * rho * Aw * Vw_squared;
+  Lift = CI * Aw * delta_pressure;
   printf("Lift Force = %lf [N]\n", Lift);
 
   return 0;
